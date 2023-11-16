@@ -6,7 +6,7 @@
 /*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/16 21:10:27 by bschaafs         ###   ########.fr       */
+/*   Updated: 2023/11/16 22:28:17 by bschaafs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,25 +144,6 @@ void	exec_test(char **envp)
 // 	return (0);
 // }
 
-char	**compute_paths(char **envp)
-{
-	char	**paths;
-	int		i;
-	char	*path;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-			path = envp[i];
-		i++;
-	}
-	paths = ft_split(&path[5], ':');
-	if (!paths)
-		return (NULL);
-	return (paths);
-}
-
 void	free_paths(char ***paths)
 {
 	int	i;
@@ -180,103 +161,46 @@ void	free_paths(char ***paths)
 	*paths = NULL;
 }
 
-int	space_index(char *cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd[i] != ' ')
-		i++;
-	return (i);
-}
-
-char	*compute_poss_path(char *path, char *sub_cmd)
-{
-	int		i;
-	int		j;
-	char	*out;
-
-	out = ft_calloc(ft_strlen(path) + ft_strlen(sub_cmd) + 2, sizeof(char));
-	if (!out)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (path[i])
-		out[j++] = path[i++];
-	out[j++] = '/';
-	i = 0;
-	while (sub_cmd[i])
-		out[j++] = sub_cmd[i++];
-	return (out);
-}
-
-char	*compute_right_path(char **paths, char *cmd)
-{
-	char	*sub_cmd;
-	char	*poss_path;
-	int		i;
-
-	sub_cmd = ft_substr(cmd, 0, space_index(cmd));
-	if (!sub_cmd)
-		return (NULL);
-	i = 0;
-	while (paths[i])
-	{
-		poss_path = compute_poss_path(paths[i++], sub_cmd);
-		if (!poss_path)
-			return (NULL);
-		if (access(poss_path, X_OK) == 0)
-			return (free(sub_cmd), poss_path);
-		free(poss_path);
-	}
-	return (free(sub_cmd), NULL);
-}
-
-char	**clean_cmd(char *cmd)
-{
-	char	**argv;
-	int		len;
-	int		i;
-	char	*temp_cmd;
-	
-	temp_cmd = ft_strjoin(cmd, file);
-	len = (int)ft_strlen(cmd);
-	i = 0;
-	while (ft_isalpha(cmd[i]))
-		i++;
-	argv = ft_split(&cmd[i], ' ');
-	if (!argv)
-		return (NULL);
-	return (argv);
-}
-
-int	do_cmd(char *file, char *cmd, char **paths, char **envp)
+void	do_first_cmd(char **argv, char **envp)
 {
 	char	*path;
-	char	**argv;
+	char	*cmd;
 
-	path = compute_right_path(paths, cmd);
-	if (!path)
-		return (0); // error msg
-	argv = clean_cmd(cmd, file);
-	if (!argv)
-		return (free_paths(&paths), 0);
-	if (execve(path, argv, envp) == -1)
-		return (free_paths(&paths), 0);
-	ft_printf("PATH=%s\n", path);
-	free(path);
-	file = NULL;
-	return ()
+	cmd = cmd_2d_array(argv[2], argv[1]);
+	path = get_right_path(envp, cmd);
+}
+
+int	pipex(char **argv, char **envp)
+{
+	int	fds[2];
+	int	pid;
+	int	cpid;
+	int	status;
+
+	if (pipe(fds) < 0)
+		return (perror("Error: "), 0);
+	pid = fork();
+	cpid = wait(&status);
+	if (pid == 0)
+		do_first_cmd(argv, envp);
+	else
+		do_second_cmd(argv, envp);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	if (argc != 5)
 		return (ft_putendl_fd("Error\nIncorrect amount of arguments.", 2), 1);
-	char	**paths = compute_paths(envp);
-	if (!paths)
-		return (1);
-	do_cmd(argv[1], argv[2], paths, envp);
-	free_paths(&paths);
-	argv = NULL;
+	pipex(argv, envp);
+	// char	*path = get_right_path(envp, argv[2]);
+	// if (!path)
+	// 	return (1);
+	// char	**av = find_cmd(argv[2], argv[1]);
+	// if (!av)
+	// 	return (free(path), 1);
+	// if (execve(path, av, envp) == -1)
+	// 	return (free(path), free_paths(&argv), 1);
+	// // do_cmd(argv[1], argv[2], path, envp);
+	// argv = NULL;
+	// return (0);
 }

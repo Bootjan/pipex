@@ -1,4 +1,4 @@
-MAIN = pipex.c
+MAIN = pipex.c get_argv.c get_path.c
 
 SRCS = $(MAIN)
 
