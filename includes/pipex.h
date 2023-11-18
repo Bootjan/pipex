@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bootjan <bootjan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:46 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/16 22:27:45 by bschaafs         ###   ########.fr       */
+/*   Updated: 2023/11/18 22:25:27 by bootjan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,16 @@
 # include "ft_printf.h"
 # include "get_next_line.h"
 
+typedef struct	s_pipex {
+	int		fd_out_prev;
+	int		fd_in_prev;
+	int		fd_out_curr;
+	int		fd_in_curr;
+}	t_pipex;
+
 char	*get_right_path(char **envp, char *cmd);
 char	*without_cmd(char *cmd, char *file);
-void	free_paths(char ***paths);
+void	free_2d_array(char ***paths);
 char	**cmd_2d_array(char *cmd, char *file);
 
 #endif

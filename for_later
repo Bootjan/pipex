@@ -1,1 +1,1 @@
-find . -iname '*.h' | cut -d "/" -f 2 | uniq
+find . -type f \( -name "*.h" -o -name "*.hpp" \) -exec dirname {} + | uniq

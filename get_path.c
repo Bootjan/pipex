@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bootjan <bootjan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 21:14:56 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/16 22:05:54 by bschaafs         ###   ########.fr       */
+/*   Updated: 2023/11/17 01:02:27 by bootjan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	space_index(char *cmd)
 	int	i;
 
 	i = 0;
-	while (cmd[i] != ' ')
+	while (cmd[i] && cmd[i] != ' ')
 		i++;
 	return (i);
 }
@@ -94,7 +94,7 @@ char	*get_right_path(char **envp, char *cmd)
 	if (!paths)
 		return (NULL);
 	path = compute_right_path(paths, cmd);
-	free_paths(&paths);
+	free_2d_array(&paths);
 	if (!path)
 		return (NULL);
 	return (path);

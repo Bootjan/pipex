@@ -6,7 +6,8 @@ OBJS = ${SRCS:%.c=${OBJS_DIR}/%.o}
 NAME = pipex
 VPATH = .
 
-INCLUDE = -I./includes
+I_DIRS := $(shell find . -type f -name "*.h" -exec dirname {} + | uniq)
+INCLUDE = ${I_DIRS:%=-I%}
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -fsanitize=address -g
 OBJS_DIR = ./objs

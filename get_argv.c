@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_argv.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bootjan <bootjan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 21:16:54 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/16 22:25:03 by bschaafs         ###   ########.fr       */
+/*   Updated: 2023/11/18 18:08:20 by bootjan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static char	*cmd_with_file(char *cmd, char *file)
 	temp_cmd = ft_strjoin(cmd, " ");
 	if (!temp_cmd)
 		return (NULL);
-	cmd = ft_strjoin(temp_cmd, file);
+	if (file)
+		cmd = ft_strjoin(temp_cmd, file);
 	free(temp_cmd);
 	if (!cmd)
 		return (NULL);
