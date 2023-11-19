@@ -1,10 +1,10 @@
-MAIN = pipex.c get_argv.c get_path.c
+MAIN = pipex.c get_argv.c get_path.c first_cmd.c middle_cmd.c last_cmd.c
 
 SRCS = $(MAIN)
 
 OBJS = ${SRCS:%.c=${OBJS_DIR}/%.o}
 NAME = pipex
-VPATH = .
+VPATH = . ./cmds
 
 I_DIRS := $(shell find . -type f -name "*.h" -exec dirname {} + | uniq)
 INCLUDE = ${I_DIRS:%=-I%}

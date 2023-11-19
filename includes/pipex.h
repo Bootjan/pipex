@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bootjan <bootjan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:46 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/18 22:25:27 by bootjan          ###   ########.fr       */
+/*   Updated: 2023/11/19 17:09:37 by bschaafs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,11 @@ char	*get_right_path(char **envp, char *cmd);
 char	*without_cmd(char *cmd, char *file);
 void	free_2d_array(char ***paths);
 char	**cmd_2d_array(char *cmd, char *file);
+void	perror_exit(const char *msg);
+
+//### CMDS #####################################################################
+void	do_first_cmd(char **argv, char **envp, t_pipex pipex);
+void	do_middle_cmd(char *av, char **envp, t_pipex pipex);
+void	do_last_cmd(char **argv, char **envp, t_pipex pipex, int i);
 
 #endif

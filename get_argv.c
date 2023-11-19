@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_argv.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bootjan <bootjan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 21:16:54 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/18 18:08:20 by bootjan          ###   ########.fr       */
+/*   Updated: 2023/11/19 17:23:28 by bschaafs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ static char	*cmd_with_file(char *cmd, char *file)
 
 char	**cmd_2d_array(char *cmd, char *file)
 {
-	char	**argv;
+	char	**av;
 	
 	cmd = cmd_with_file(cmd, file);
 	if (!cmd)
 		return (NULL);
-	argv = ft_split(cmd, ' ');
-	if (!argv)
+	av = ft_split(cmd, ' ');
+	if (!av)
 		return (NULL);
-	return (argv);
+	return (av);
 }
 
 static int	word_count(char *str)
