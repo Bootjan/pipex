@@ -1,10 +1,10 @@
-MAIN = pipex.c get_argv.c get_path.c first_cmd.c middle_cmd.c last_cmd.c
+MAIN = pipex.c get_cmd.c get_path.c first_cmd.c middle_cmd.c last_cmd.c utils.c
 
 SRCS = $(MAIN)
 
 OBJS = ${SRCS:%.c=${OBJS_DIR}/%.o}
 NAME = pipex
-VPATH = . ./cmds
+VPATH = . ./cmds ./utils ./path_cmd
 
 I_DIRS := $(shell find . -type f -name "*.h" -exec dirname {} + | uniq)
 INCLUDE = ${I_DIRS:%=-I%}
@@ -19,6 +19,8 @@ MAKE_LIB = ${MAKE_DIR}/libftprintf.a
 MAKE_DIR = ./libft
 
 all:	${NAME}
+
+bonus: all
 
 ${NAME}: ${MAKE_LIB} ${OBJS_DIR} ${OBJS}
 	${CC} ${CFLAGS} ${OBJS} ${LIB} -o ${NAME}
@@ -43,4 +45,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean re clean fclean
+.PHONY: all clean re clean fclean bonus
