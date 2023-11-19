@@ -6,7 +6,7 @@
 /*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/19 18:35:14 by bschaafs         ###   ########.fr       */
+/*   Updated: 2023/11/19 20:20:28 by bschaafs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	pipex(int argc, char **argv, char **envp)
 	ft_bzero(&pipex, sizeof(t_pipex));
 	init_pipe(&pipex);
 	pid = fork_wait();
-	wait(NULL);
 	if (pid == 0)
 		do_first_cmd(argv, envp, pipex);
 	i = 0;
@@ -41,9 +40,17 @@ void	pipex(int argc, char **argv, char **envp)
 		do_last_cmd(argv, envp, pipex, i);
 }
 
+void	here_doc(int argc, char **argv, char **envp)
+{
+	
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	if (argc < 5)
 		return (ft_putendl_fd("Error\nIncorrect amount of arguments.", 2), 1);
-	pipex(argc, argv, envp);
+	if (ft_strncmp(argv[1], "here_doc", 9) == 0 && argc == 6)
+		here_doc(argc, argv, envp);
+	else
+		pipex(argc, argv, envp);
 }
