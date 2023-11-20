@@ -6,7 +6,7 @@
 /*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:46 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/19 18:36:23 by bschaafs         ###   ########.fr       */
+/*   Updated: 2023/11/20 18:16:09 by bschaafs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@ void	perror_exit(const char *msg);
 //### CMDS #####################################################################
 void	do_first_cmd(char **argv, char **envp, t_pipex pipex);
 void	do_middle_cmd(char *av, char **envp, t_pipex pipex);
-void	do_last_cmd(char **argv, char **envp, t_pipex pipex, int i);
+void	do_last_cmd(char **argv, char **envp, t_pipex pipex);
+
+//### HERE_DOC #################################################################
+void	here_doc(char **argv, char **envp);
+void	do_last_cmd_append(char **argv, char **envp, t_pipex pipex);
 
 #endif

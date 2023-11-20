@@ -6,7 +6,7 @@
 /*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 15:02:52 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/19 18:32:31 by bschaafs         ###   ########.fr       */
+/*   Updated: 2023/11/20 18:42:41 by bschaafs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ void	do_middle_cmd(char *av, char **envp, t_pipex pipex)
 	free(path);
 	free_2d_array(&cmd);
 	if (output_check == -1)
-		perror_exit("Middle cmd:");
+		perror_exit("Execve failed (middle):");
 }

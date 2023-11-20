@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 18:27:56 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/19 19:42:33 by bschaafs         ###   ########.fr       */
+/*   Updated: 2023/11/20 18:43:09 by bschaafs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	fork_wait(void)
 
 	pid = fork();
 	if (pid == -1)
-		perror_exit("Init fork:");
+		perror_exit("Fork error:");
 	wait(NULL);
 	return (pid);
 }
@@ -68,5 +68,5 @@ void	do_dup2(int fd, int new_fd)
 
 	dup_check = dup2(fd, new_fd);
 	if (dup_check != new_fd)
-		perror_exit("Failed dup2:");
+		perror_exit("Dup2 error:");
 }

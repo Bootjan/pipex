@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   last_cmd.c                                         :+:      :+:    :+:   */
+/*   here_doc_last_cmd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/19 15:03:56 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/20 18:40:59 by bschaafs         ###   ########.fr       */
+/*   Created: 2023/11/20 18:34:10 by bschaafs          #+#    #+#             */
+/*   Updated: 2023/11/20 18:41:27 by bschaafs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	find_fds(char *file, t_pipex pipex, int *fd_out)
+static void	find_fds_append(char *file, t_pipex pipex, int *fd_out)
 {
 	int	output_check;
 
 	close(pipex.fd_in_curr);
 	do_dup2(pipex.fd_out_curr, STDIN_FILENO);
-	*fd_out = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	*fd_out = open(file, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (*fd_out == -1)
 		perror_exit("Open error output file:");
 	output_check = dup2(*fd_out, STDOUT_FILENO);
@@ -49,7 +49,7 @@ static char	*find_path_cmd(char *av, char **envp, char ***cmd, int fd_out)
 	return (path);
 }
 
-void	do_last_cmd(char **argv, char **envp, t_pipex pipex)
+void	do_last_cmd_append(char **argv, char **envp, t_pipex pipex)
 {
 	char	**cmd;
 	char	*path;
@@ -58,8 +58,8 @@ void	do_last_cmd(char **argv, char **envp, t_pipex pipex)
 
 	cmd = NULL;
 	fd_out = 0;
-	find_fds(argv[1], pipex, &fd_out);
-	path = find_path_cmd(argv[0], envp, &cmd, fd_out);
+	find_fds_append(argv[5], pipex, &fd_out);
+	path = find_path_cmd(argv[4], envp, &cmd, fd_out);
 	output_check = execve(path, cmd, envp);
 	free(path);
 	free_2d_array(&cmd);

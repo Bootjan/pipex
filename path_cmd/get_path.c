@@ -6,7 +6,7 @@
 /*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 21:14:56 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/19 19:45:56 by bschaafs         ###   ########.fr       */
+/*   Updated: 2023/11/20 18:42:25 by bschaafs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*compute_path_no_fd(char **envp, char ***cmd)
 	if (!path)
 	{
 		free_2d_array(cmd);
-		perror_exit("Couldn't make path:");
+		perror_exit("Failed to make path:");
 	}
 	return (path);
 }

@@ -6,7 +6,7 @@
 /*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 21:16:54 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/19 18:50:08 by bschaafs         ###   ########.fr       */
+/*   Updated: 2023/11/20 18:42:11 by bschaafs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ char	**compute_cmd_no_file(char *av)
 
 	cmd = ft_split(av, ' ');
 	if (!cmd)
-		perror_exit("Couldn't make command:");
+		perror_exit("Failed to make cmds:");
 	return (cmd);
 }
