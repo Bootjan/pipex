@@ -6,7 +6,7 @@
 /*   By: bootjan <bootjan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 18:30:02 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/21 23:50:05 by bootjan          ###   ########.fr       */
+/*   Updated: 2023/11/22 00:40:29 by bootjan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void	init_pipe(t_pipex *pipex)
 {
 	int	fd[2];
 
-	if (pipex->fd_in_prev)
-	{
-		close(pipex->fd_in_prev);
-		close(pipex->fd_out_prev);
-	}
+	// if (pipex->fd_in_prev)
+	// {
+	// 	close(pipex->fd_in_prev);
+	// 	close(pipex->fd_out_prev);
+	// }
 	if (pipex->fd_in_curr)
 	{
 		pipex->fd_in_prev = pipex->fd_in_curr;

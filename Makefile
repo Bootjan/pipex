@@ -16,7 +16,7 @@ VPATH = . ./cmds ./utils ./path_cmd ./here_doc
 I_DIRS := $(shell find . -type f -name "*.h" -exec dirname {} + | uniq)
 INCLUDE = ${I_DIRS:%=-I%}
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 OBJS_DIR = ./objs
 
 LIB = -L./libft -lftprintf
