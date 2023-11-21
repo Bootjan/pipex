@@ -1,7 +1,7 @@
 MAIN = pipex.c
 PATH_CMD = get_cmd.c get_path.c
 CMDS = first_cmd.c middle_cmd.c last_cmd.c pipex_utils.c handeling_processes.c
-HERE_DOC = here_doc.c here_doc_last_cmd.c
+HERE_DOC = here_doc.c here_doc_last_cmd.c here_doc_input.c
 
 
 SRCS = $(PATH_CMD)\

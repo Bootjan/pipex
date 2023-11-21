@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   first_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bootjan <bootjan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 15:06:49 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/21 16:45:50 by bschaafs         ###   ########.fr       */
+/*   Updated: 2023/11/21 23:42:54 by bootjan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	do_first_cmd(char **argv, char **envp, t_pipex pipex)
 	free(path);
 	free_2d_array(&cmd);
 	close(pipex.fd_in_curr);
+	close(fd_in);
 	if (output_check == -1)
 		perror_exit("Execve error (first):");
 }

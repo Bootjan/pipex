@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   middle_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bootjan <bootjan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 15:02:52 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/21 19:45:30 by bschaafs         ###   ########.fr       */
+/*   Updated: 2023/11/21 23:43:06 by bootjan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	do_middle_cmds(int argc, char **argv, char **envp, t_pipex *pipex)
 	{
 		close(pipex->fd_in_curr);
 		init_pipe(pipex);
-		pid = do_fork();
+		pid = fork_wait();
 		if (pid == 0)
 			do_middle_cmd(argv[2 + i], envp, *pipex);
 	}

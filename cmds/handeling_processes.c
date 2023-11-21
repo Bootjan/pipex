@@ -3,28 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   handeling_processes.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bootjan <bootjan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 18:30:02 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/21 18:30:30 by bschaafs         ###   ########.fr       */
+/*   Updated: 2023/11/21 23:50:05 by bootjan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	wait_for_childs(int num)
-{
-	int	i;
-
-	i = 0;
-	while (i++ < num)
-		wait(NULL);
-}
-
 void	init_pipe(t_pipex *pipex)
 {
 	int	fd[2];
 
+	if (pipex->fd_in_prev)
+	{
+		close(pipex->fd_in_prev);
+		close(pipex->fd_out_prev);
+	}
 	if (pipex->fd_in_curr)
 	{
 		pipex->fd_in_prev = pipex->fd_in_curr;
@@ -36,13 +32,14 @@ void	init_pipe(t_pipex *pipex)
 	pipex->fd_out_curr = fd[0];
 }
 
-int	do_fork(void)
+int	fork_wait(void)
 {
 	int	pid;
 
 	pid = fork();
 	if (pid == -1)
 		perror_exit("Fork error:");
+	wait(NULL);
 	return (pid);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bootjan <bootjan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:46 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/21 18:31:58 by bschaafs         ###   ########.fr       */
+/*   Updated: 2023/11/21 23:45:39 by bootjan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*compute_path_no_fd(char **envp, char ***cmd);
 
 //### PROCESSES ################################################################
 void	do_dup2(int fd, int new_fd);
-int		do_fork(void);
+int		fork_wait(void);
 void	init_pipe(t_pipex *pipex);
 void	wait_for_childs(int num);
 
@@ -57,10 +57,11 @@ void	perror_exit(const char *msg);
 void	do_first_cmd(char **argv, char **envp, t_pipex pipex);
 void	do_middle_cmd(char *av, char **envp, t_pipex pipex);
 int		do_middle_cmds(int argc, char **argv, char **envp, t_pipex *pipex);
-void	last_cmd(char **argv, char **envp, t_pipex pipex, int *status);
+void	do_last_cmd(char **argv, char **envp, t_pipex pipex);
 
 //### HERE_DOC #################################################################
 void	here_doc(char **argv, char **envp);
 void	do_last_cmd_append(char **argv, char **envp, t_pipex pipex);
+void	input_to_pipe(char *av, t_pipex *pipex, int *pid);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   last_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bootjan <bootjan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 15:03:56 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/21 20:04:51 by bschaafs         ###   ########.fr       */
+/*   Updated: 2023/11/21 23:47:56 by bootjan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	find_fds(char *file, t_pipex pipex, int *fd_out)
 	int	output_check;
 
 	close(pipex.fd_in_curr);
+	close(pipex.fd_out_prev);
 	do_dup2(pipex.fd_out_curr, STDIN_FILENO);
 	*fd_out = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (*fd_out == -1)
@@ -49,7 +50,7 @@ static char	*find_path_cmd(char *av, char **envp, char ***cmd, int fd_out)
 	return (path);
 }
 
-static void	do_last_cmd(char **argv, char **envp, t_pipex pipex)
+void	do_last_cmd(char **argv, char **envp, t_pipex pipex)
 {
 	char	**cmd;
 	char	*path;
@@ -66,17 +67,4 @@ static void	do_last_cmd(char **argv, char **envp, t_pipex pipex)
 	close(fd_out);
 	if (output_check == -1)
 		perror_exit("Execve error:");
-}
-
-void	last_cmd(char **argv, char **envp, t_pipex pipex, int *status)
-{
-	int	pid;
-
-	pid = do_fork();
-	if (pid == 0)
-	{
-		do_last_cmd(argv, envp, pipex);
-	}
-	if (pid > 0)
-		waitpid(getpid(), status, 0);
 }
