@@ -6,7 +6,7 @@
 /*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 15:03:56 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/21 19:45:13 by bschaafs         ###   ########.fr       */
+/*   Updated: 2023/11/21 20:04:51 by bschaafs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	last_cmd(char **argv, char **envp, t_pipex pipex, int *status)
 	if (pid == 0)
 	{
 		do_last_cmd(argv, envp, pipex);
-		waitpid(getpid(), status, 0);
 	}
+	if (pid > 0)
+		waitpid(getpid(), status, 0);
 }
