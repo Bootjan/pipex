@@ -6,7 +6,7 @@
 /*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:41:35 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/20 18:58:38 by bschaafs         ###   ########.fr       */
+/*   Updated: 2023/11/21 18:16:19 by bschaafs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	here_doc(char **argv, char **envp)
 	limiter = compute_limiter(argv[2]);
 	input = compute_input(limiter);
 	init_pipe(&pipex);
-	pid = fork_wait();
+	pid = do_fork();
 	if (pid == 0)
 		write_input_to_pipe(input, pipex);
 	free(input);
@@ -92,7 +92,7 @@ void	here_doc(char **argv, char **envp)
 	{
 		close(pipex.fd_in_curr);
 		init_pipe(&pipex);
-		pid = fork_wait();
+		pid = do_fork();
 		if (pid == 0)
 			do_middle_cmd((char *)argv[3], envp, pipex);
 	}

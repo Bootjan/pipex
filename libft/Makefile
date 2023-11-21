@@ -23,25 +23,29 @@ MAIN = main.c
 all: ${NAME}
 
 ${OBJS_DIR}/%.o:	%.c
-	${CC} ${CFLAGS} -c $< -o $@
+	@${CC} ${CFLAGS} -c $< -o $@
 
 ${NAME}:		${LIBFT} ${OBJS_DIR} ${OBJS}
-	cp	${LIBFT} ${NAME}
-	${ARRCS} ${NAME} ${OBJS}
+	@cp	${LIBFT} ${NAME}
+	@${ARRCS} ${NAME} ${OBJS}
+	@echo "Libftprintf.a made!"
 
 ${LIBFT}:
-	make -C ${LIBFT_DIR} all
+	@make -C ${LIBFT_DIR} all
 
 ${OBJS_DIR}:
-	mkdir -p ${OBJS_DIR}
+	@mkdir -p ${OBJS_DIR}
+	@echo "./objs made!"
 
 clean:
-	make -C ${LIBFT_DIR} clean
-	${RM} ${OBJS}
+	@make -C ${LIBFT_DIR} clean
+	@${RM} ${OBJS}
+	@echo "Ft_printf objects removed!"
 
 fclean:	clean
-	make -C ${LIBFT_DIR} fclean
-	${RM} ${NAME}
+	@make -C ${LIBFT_DIR} fclean
+	@${RM} ${NAME}
+	@echo "Libftprintf.a removed!"
 
 re: fclean all
 

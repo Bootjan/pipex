@@ -1,6 +1,6 @@
 MAIN = pipex.c
 PATH_CMD = get_cmd.c get_path.c
-CMDS = first_cmd.c middle_cmd.c last_cmd.c pipex_utils.c
+CMDS = first_cmd.c middle_cmd.c last_cmd.c pipex_utils.c handeling_processes.c
 HERE_DOC = here_doc.c here_doc_last_cmd.c
 
 
@@ -30,25 +30,30 @@ all:	${NAME}
 bonus: all
 
 ${NAME}: ${MAKE_LIB} ${OBJS_DIR} ${OBJS}
-	${CC} ${CFLAGS} ${OBJS} ${LIB} -o ${NAME}
+	@${CC} ${CFLAGS} ${OBJS} ${LIB} -o ${NAME}
+	@echo "./pipex made!"
 
 ${MAKE_LIB}:
-	make -C ${MAKE_DIR} all
+	@make -C ${MAKE_DIR} all
 
 ${OBJS_DIR}:
-	mkdir -p ${OBJS_DIR}
+	@mkdir -p ${OBJS_DIR}
+	@echo "./objs made!"
 
 ${OBJS_DIR}/%.o:	%.c
-	${CC} ${CFLAGS} -c $< -o $@ ${INCLUDE}
+	@${CC} ${CFLAGS} -c $< -o $@ ${INCLUDE}
 
 clean:	
-	make -C ${MAKE_DIR} clean
-	${RM} -r ${OBJS_DIR}
+	@make -C ${MAKE_DIR} clean
+	@${RM} -r ${OBJS_DIR}
+	@echo "Pipex objects removed!"
 
 fclean: clean
-	${RM} ${NAME}
-	make -C ${MAKE_DIR} fclean
-	rm -rf ${OBJS_DIR}
+	@${RM} ${NAME}
+	@echo "./pipex removed!"
+	@make -C ${MAKE_DIR} fclean
+	@rm -rf ${OBJS_DIR}
+	@echo "./objs removed!"
 
 re: fclean all
 

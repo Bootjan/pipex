@@ -6,42 +6,45 @@
 /*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:19:06 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/20 18:15:52 by bschaafs         ###   ########.fr       */
+/*   Updated: 2023/11/21 19:31:57 by bschaafs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	pipex(int argc, char **argv, char **envp)
+int	pipex(int argc, char **argv, char **envp)
 {
 	int		pid;
+	t_pipex	pipex;
+	int		status;
 	int		i;
-	t_pipex	pipex;	
 
+	status = 0;
+	i = 0;
 	ft_bzero(&pipex, sizeof(t_pipex));
 	init_pipe(&pipex);
-	pid = fork_wait();
+	pid = do_fork();
 	if (pid == 0)
 		do_first_cmd(argv, envp, pipex);
-	i = 0;
-	while (i++ < argc - 5 && pid > 0)
-	{
-		close(pipex.fd_in_curr);
-		init_pipe(&pipex);
-		pid = fork_wait();
-		if (pid == 0)
-			do_middle_cmd(argv[2 + i], envp, pipex);
-	}
 	if (pid > 0)
-		do_last_cmd(&(argv[2 + i]), envp, pipex);
+		i = do_middle_cmds(argc, argv, envp, &pipex);
+	if (pid > 0)
+		last_cmd(&(argv[2 + i]), envp, pipex, &status);
+	if (pid > 0)
+		wait_for_childs(argc - 4);
+	return (WIFEXITED(status));
 }
 
 int	main(int argc, char **argv, char **envp)
 {
+	int	ret;
+
+	ret = 0;
 	if (argc < 5)
 		return (ft_putendl_fd("Error\nIncorrect amount of arguments.", 2), 1);
 	if (ft_strncmp(argv[1], "here_doc", 9) == 0 && argc == 6)
 		here_doc(argv, envp);
 	else
-		pipex(argc, argv, envp);
+		ret = pipex(argc, argv, envp);
+	return (ft_printf("Ret value: %i\n", ret), ret);
 }

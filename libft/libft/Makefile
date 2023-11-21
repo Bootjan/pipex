@@ -5,8 +5,9 @@ SRCS = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c f
 ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlen.c ft_strmapi.c ft_strncmp.c ft_strnstr.c ft_strrchr.c \
 ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c ft_strlcpy.c ft_abs.c ft_get_max.c ft_get_min.c ft_swap_list.c \
 ft_ischar.c
-MAIN = main.c
-OBJS = ${SRCS:.c=.o}
+
+OBJS = ${SRCS:%.c=${OBJS_DIR}/%.o}
+OBJS_DIR = ./objs
 
 CC = cc
 CFLAGS= -Wall -Wextra -Werror
@@ -18,14 +19,24 @@ ARRCS = ar rcs
 
 all: ${NAME} 
 
-${NAME}: ${OBJS}
-	${ARRCS} $(NAME) $(OBJS)
+${OBJS_DIR}/%.o:	%.c
+	@${CC} ${CFLAGS} -c $< -o $@
+
+${NAME}: $(OBJS_DIR) ${OBJS}
+	@${ARRCS} $(NAME) $(OBJS)
+	@echo "Libft.a made!"
+
+$(OBJS_DIR):
+	@mkdir -p objs
+	@echo "./objs made!"
 
 clean:
-	${REMOVE} ${OBJS}
+	@${REMOVE} ${OBJS}
+	@echo "Libft objects removed!"
 
 fclean: clean
-	${REMOVE} ${NAME}
+	@${REMOVE} ${NAME}
+	@echo "Libft.a removed!"
 
 re: fclean all
 
