@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bootjan <bootjan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 23:37:27 by bootjan           #+#    #+#             */
-/*   Updated: 2023/11/21 23:46:20 by bootjan          ###   ########.fr       */
+/*   Updated: 2023/11/22 13:53:12 by bschaafs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	input_to_pipe(char *av, t_pipex *pipex, int *pid)
 	limiter = compute_limiter(av);
 	init_pipe(pipex);
 	input = compute_input(limiter);
-	*pid = fork_wait();
+	*pid = do_fork();
 	if (*pid == 0)
 		write_input_to_pipe(input, *pipex);
 	free(input);

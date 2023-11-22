@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   last_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bootjan <bootjan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 15:03:56 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/21 23:47:56 by bootjan          ###   ########.fr       */
+/*   Updated: 2023/11/22 14:18:33 by bschaafs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*find_path_cmd(char *av, char **envp, char ***cmd, int fd_out)
 	return (path);
 }
 
-void	do_last_cmd(char **argv, char **envp, t_pipex pipex)
+static void	do_last_cmd(char **argv, char **envp, t_pipex pipex)
 {
 	char	**cmd;
 	char	*path;
@@ -67,4 +67,17 @@ void	do_last_cmd(char **argv, char **envp, t_pipex pipex)
 	close(fd_out);
 	if (output_check == -1)
 		perror_exit("Execve error:");
+}
+
+void	last_cmd_status(char **av, char **envp, t_pipex pipex, int *status)
+{
+	int	pid;
+
+	close(pipex.fd_in_curr);
+	pid = do_fork();
+	if (pid == 0)
+	{
+		do_last_cmd(av, envp, pipex);
+		waitpid(getpid(), status, 0);
+	}
 }

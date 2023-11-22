@@ -6,7 +6,7 @@
 /*   By: bschaafs <bschaafs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 18:27:56 by bschaafs          #+#    #+#             */
-/*   Updated: 2023/11/21 18:30:23 by bschaafs         ###   ########.fr       */
+/*   Updated: 2023/11/22 13:55:36 by bschaafs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,13 @@ void	free_2d_array(char ***paths)
 	}
 	free(*paths);
 	*paths = NULL;
+}
+
+int	check_status(int status)
+{
+	if (WIFEXITED(status) == true)
+		return (WEXITSTATUS(status));
+	if (WIFSIGNALED(status) == true)
+		return (WTERMSIG(status));
+	return (perror_exit("Child process exited abnormally:"), 1);
 }
